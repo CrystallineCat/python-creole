@@ -201,7 +201,10 @@ class ReStructuredTextEmitter(BaseEmitter):
 
     def a_emit(self, node):
         link_text = self.emit_children(node)
-        url = node.attrs["href"]
+        url = node.attrs.get("href", None)
+
+        if url is None:
+            return link_text
 
         old_url = self._get_old_substitution(self._used_substitution_links, link_text, url)
 
